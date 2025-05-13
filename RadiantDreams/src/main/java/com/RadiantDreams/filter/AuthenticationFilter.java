@@ -18,13 +18,14 @@ import com.RadiantDreams.util.CookieUtil;
 public class AuthenticationFilter implements Filter {
 
     private static final String LOGIN = "/login";
-    private static final String LOGOUT = "/logout"; // <-- Added logout constant
+    private static final String LOGOUT = "/logout";
     private static final String REGISTER = "/register";
     private static final String HOME = "/home";
     private static final String ROOT = "/";
     private static final String DASHBOARD = "/dashboard";
     private static final String USERS = "/users";
     private static final String PRODUCTS_MANAGEMENT = "/productsmanagement";
+    private static final String ORDER_MANAGEMENT = "/ordermanagement";
     private static final String PORTFOLIO = "/portfolio";
     private static final String UPDATE_PORTFOLIO = "/updatePortfolio";
     private static final String PRODUCTS = "/products";
@@ -34,7 +35,7 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // No init logic needed
+        // No initialization needed
     }
 
     @Override
@@ -59,11 +60,11 @@ public class AuthenticationFilter implements Filter {
                 ? CookieUtil.getCookie(req, "role").getValue()
                 : null;
 
-        // Publicly accessible routes
+        // Public routes
         if (
             uri.endsWith(LOGIN) ||
             uri.endsWith(REGISTER) ||
-            uri.endsWith(LOGOUT) || // <-- Allow logout unconditionally
+            uri.endsWith(LOGOUT) ||
             uri.endsWith(HOME) ||
             uri.endsWith(ROOT) ||
             uri.startsWith(contextPath + PRODUCT_VIEW) ||
@@ -74,14 +75,15 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        // Admin Authentication
+        // Admin routes
         if ("admin".equalsIgnoreCase(userRole)) {
             if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
                 res.sendRedirect(contextPath + DASHBOARD);
             } else if (
                 uri.endsWith(DASHBOARD) ||
                 uri.endsWith(USERS) ||
-                uri.endsWith(PRODUCTS_MANAGEMENT)
+                uri.endsWith(PRODUCTS_MANAGEMENT) ||
+                uri.endsWith(ORDER_MANAGEMENT)
             ) {
                 chain.doFilter(request, response);
             } else {
@@ -89,7 +91,7 @@ public class AuthenticationFilter implements Filter {
             }
         }
 
-        // Customer Authentication
+        // Customer routes
         else if ("customer".equalsIgnoreCase(userRole)) {
             if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
                 res.sendRedirect(contextPath + HOME);
@@ -112,6 +114,6 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void destroy() {
-        // No destroy logic needed
+        // No cleanup needed
     }
 }

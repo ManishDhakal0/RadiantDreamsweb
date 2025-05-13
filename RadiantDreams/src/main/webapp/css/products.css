@@ -233,4 +233,13 @@ h1 {
     margin-right: 0;
     margin-bottom: 10px;
   }
+  .alert {
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+  
 }

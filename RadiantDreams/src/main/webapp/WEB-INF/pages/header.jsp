@@ -15,19 +15,15 @@
 
 <div id="header">
     <header class="header">
-        <h1 class="logo">
-            <a href="<%= contextPath %>">
-                <img src="<%= contextPath %>/resources/images/system/logo.png" alt="Logo" />
-            </a>
-        </h1>
+	<div class="logo">RADIANT DREAMS</div>
         <ul class="main-nav">
             <li><a href="home">Home</a></li>
             <li><a href="contact">Contact Us</a></li>
             <li><a href="products">Products</a></li>
             <li><a href="portfolio">Portfolio</a></li>
-           
+           <li><a href="about">About Us</a></li>
             <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
-            <li><a href="about">About Us</a></li>
+            
         </ul>
     </header>
 </div>

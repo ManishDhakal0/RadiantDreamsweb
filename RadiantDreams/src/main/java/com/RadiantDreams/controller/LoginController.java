@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
             SessionUtil.setAttribute(request, "username", username);
             SessionUtil.setAttribute(request, "role", role);
 
-            CookieUtil.addCookie(response, "role", role, 5 * 30);
+            CookieUtil.addCookie(response, "role", role, 5 * 60);
 
             
             if ("admin".equalsIgnoreCase(role)) {

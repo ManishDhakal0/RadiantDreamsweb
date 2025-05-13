@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * DbConfig manages the connection setup for the Chapou MySQL database.
+ * DbConfig manages the connection setup for the RadiantDreams MySQL database.
  */
 public class DBConfig {
 
     // Database connection settings
-    private static final String DB_NAME = "RadiantDreams";
+    private static final String DB_NAME = "RadiantDreams1";
     private static final String URL = "jdbc:mysql://localhost:3306/" + DB_NAME;
     private static final String USERNAME = "root";
     private static final String PASSWORD = ""; // Replace with actual password if needed

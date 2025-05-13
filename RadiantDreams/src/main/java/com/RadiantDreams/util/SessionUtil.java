@@ -15,10 +15,12 @@ public class SessionUtil {
      * @param key     the attribute key
      * @param value   the value to store
      */
-    public static void setAttribute(HttpServletRequest request, String key, Object value) {
-        HttpSession session = request.getSession();
-        session.setAttribute(key, value);
-    }
+	public static void setAttribute(HttpServletRequest request, String key, Object value) {
+	    HttpSession session = request.getSession();
+	    session.setMaxInactiveInterval(600); // Set session timeout to 600 seconds (10 minutes)
+	    session.setAttribute(key, value);
+	}
+
 
     /**
      * Retrieves a value from the session.

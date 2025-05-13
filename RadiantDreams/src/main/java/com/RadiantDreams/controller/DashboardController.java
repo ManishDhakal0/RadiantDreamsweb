@@ -5,6 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import com.RadiantDreams.model.OrderModel;
+import com.RadiantDreams.model.ProductModel;
+import com.RadiantDreams.model.CustomerModel;
+import com.RadiantDreams.service.DashboardService;
 
 @WebServlet("/dashboard")
 public class DashboardController extends HttpServlet {
@@ -20,32 +27,43 @@ public class DashboardController extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        // Check if the user is logged in and is an admin
         if (session != null) {
             String username = (String) session.getAttribute("username");
             String role = (String) session.getAttribute("role");
 
             if (username != null && "admin".equalsIgnoreCase(role)) {
-                // Forward to dashboard page
+                DashboardService dashboardService = new DashboardService();
+
+                int totalCustomers = dashboardService.getTotalCustomers();
+                int totalOrders = dashboardService.getTotalOrders();
+                double totalRevenue = dashboardService.getTotalRevenue();
+                List<OrderModel> recentOrders = dashboardService.getRecentOrders();
+                List<CustomerModel> latestCustomers = dashboardService.getLatestCustomers();
+                List<ProductModel> topProducts = dashboardService.getTopSellingProducts();
+               
+
+                Map<String, Integer> orderStatuses = dashboardService.getOrderStatusCounts();
+
+                request.setAttribute("totalCustomers", totalCustomers);
+                request.setAttribute("totalOrders", totalOrders);
+                request.setAttribute("totalRevenue", totalRevenue);
+                request.setAttribute("recentOrders", recentOrders);
+                request.setAttribute("latestCustomers", latestCustomers);
+                request.setAttribute("topProducts", topProducts);
+                request.setAttribute("orderStatuses", orderStatuses);
+
                 request.getRequestDispatcher("/WEB-INF/pages/dashboard.jsp").forward(request, response);
                 return;
             }
         }
 
-        // If not admin or not logged in, redirect to login
         response.sendRedirect(request.getContextPath() + "/login");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Process dashboard form submissions here
-        // For logout, the request should be sent to LogoutController instead
-        
-        // If you need to handle other POST operations for the dashboard:
-        // [Your other POST handling code here]
-        
-        // If no specific action is found, redirect to dashboard again
+        // No POST operations currently
         response.sendRedirect(request.getContextPath() + "/dashboard");
     }
 }

@@ -22,7 +22,8 @@
     <div class="product-detail">
       <div class="product-gallery">
         <div class="product-image">
-          <img src="${pageContext.request.contextPath}/resources/images/mattress1.webp" alt="<%= product.getName() %>">
+         <img src="${pageContext.request.contextPath}${product.imageUrl}" alt="${product.name}">
+
         </div>
       </div>
       

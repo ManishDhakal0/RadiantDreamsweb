@@ -95,7 +95,7 @@
           </div>
           
           <div class="form-group">
-            <button type="submit" class="submit-button">SEND MESSAGE</button>
+            <button  class="submit-button">SEND MESSAGE</button>
           </div>
         </form>
       </div>

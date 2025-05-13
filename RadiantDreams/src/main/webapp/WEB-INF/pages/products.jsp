@@ -21,7 +21,6 @@
 <div class="container">
     <h1>Our Products</h1>
 
-    <!-- ✅ Only ONE Filter Form -->
     <form method="get" action="${pageContext.request.contextPath}/products" class="filter-bar">
         <label for="categoryFilter">Filter by Category:</label>
         <select id="categoryFilter" name="category" onchange="this.form.submit()">
@@ -36,7 +35,8 @@
         <c:forEach var="product" items="${productList}">
             <div class="product-card" data-category="${product.category}">
                 <div class="product-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/mattress1.webp" alt="${product.name}">
+                   <img src="${pageContext.request.contextPath}${product.imageUrl}" alt="${product.name}">
+
                 </div>
                 <div class="product-info">
                     <h3>${product.name}</h3>
@@ -45,7 +45,15 @@
                     <p class="stock">${product.quantity} in stock</p>
                     <div class="actions">
                         <a class="view" href="${pageContext.request.contextPath}/product/view?id=${product.id}">View Details</a>
-                        <button class="buy">Buy Now</button>
+                       <form method="post" action="${pageContext.request.contextPath}/products" onsubmit="return confirmBuy()">
+    <input type="hidden" name="action" value="buy">
+    <input type="hidden" name="productId" value="${product.id}">
+    <input type="hidden" name="category" value="${selectedCategory}">
+    <button type="submit" class="buy">Buy Now</button>
+</form>
+
+
+
                     </div>
                 </div>
             </div>
@@ -58,6 +66,12 @@
         </c:if>
     </div>
 </div>
+<script>
+    function confirmBuy() {
+        return confirm("Are you sure you want to buy this product?");
+    }
+</script>
+
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+// ✅ Update to ProductService.java
 package com.RadiantDreams.service;
 
 import com.RadiantDreams.config.DBConfig;
@@ -12,10 +13,6 @@ import java.util.List;
 
 public class ProductService {
 
-    /**
-     * Fetches all products from the database
-     * @return List<ProductModel>
-     */
     public List<ProductModel> getAllProducts() {
         List<ProductModel> products = new ArrayList<>();
         String query = "SELECT * FROM product";
@@ -41,14 +38,13 @@ public class ProductService {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
-        
 
         return products;
     }
+
     public ProductModel getProductById(int id) {
         String query = "SELECT * FROM product WHERE id = ?";
-        
+
         try (Connection conn = DBConfig.getDbConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -74,6 +70,7 @@ public class ProductService {
 
         return null;
     }
+
     public List<ProductModel> getProductsByCategory(String category) {
         List<ProductModel> products = new ArrayList<>();
         String query = "SELECT * FROM product WHERE category = ?";
@@ -105,5 +102,21 @@ public class ProductService {
         return products;
     }
 
+    public static boolean decreaseQuantity(int productId) {
+        String query = "UPDATE product SET quantity = quantity - 1 WHERE id = ? AND quantity > 0";
 
+        try (Connection conn = DBConfig.getDbConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, productId);
+            int rowsUpdated = stmt.executeUpdate();
+
+            return rowsUpdated > 0;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

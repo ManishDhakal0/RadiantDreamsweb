@@ -11,6 +11,13 @@ body {
 	min-height: 100vh;
 }
 
+.logo {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #0055a5;
+}
+
 .header {
 	padding-top: .5em;
 	padding-bottom: .5em;
